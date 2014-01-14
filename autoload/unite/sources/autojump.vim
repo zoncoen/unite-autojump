@@ -38,7 +38,8 @@ let s:action = {
 
 function! s:action.func(candidate) "{{{
     if a:candidate.action__directory != ''
-        execute g:unite_kind_cdable_cd_command '`=a:candidate.action__directory`'
+        execute g:unite_kind_cdable_cd_command a:candidate.action__directory
+        echo a:candidate.action__directory
         call unite#util#system(printf('autojump -a %s', a:candidate.action__directory))
     endif
 endfunction "}}}
