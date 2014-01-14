@@ -28,15 +28,34 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+" Define custom unite action. "{{{
+let s:autojump_add_command = 'autojump -a %s'
+
+let s:action = {
+\     'description': 'change current working directory with adding path to autojump database',
+\     'is_selectable': 0,
+\ }
+
+function! s:action.func(candidate) "{{{
+    if a:candidate.action__directory != ''
+        execute g:unite_kind_cdable_cd_command '`=a:candidate.action__directory`'
+        call unite#util#system(printf('autojump -a %s', a:candidate.action__directory))
+    endif
+endfunction "}}}
+
+call unite#custom#action('cdable', 'cd_autojump', s:action)
+"}}}
+
+" Define unite source. "{{{
+let s:autojump_command = 'autojump -s'
+
 let s:unite_source = {
 \     'name': 'autojump',
 \     'description': 'candidates from autojump database',
-\     'default_action' : 'cd',
+\     'default_action' : 'cd_autojump',
 \ }
 
-let s:autojump_command = 'autojump -s'
-
-function! s:unite_source.gather_candidates(args, context)
+function! s:unite_source.gather_candidates(args, context) "{{{
     let l:directories = reverse(split(unite#util#system(s:autojump_command),"\n"))[7:]
     return map(directories,
     \         '{
@@ -45,11 +64,12 @@ function! s:unite_source.gather_candidates(args, context)
     \             "kind": "cdable",
     \             "action__directory": split(v:val, "\t")[1],
     \         }')
-endfunction
+endfunction "}}}
 
 function! unite#sources#autojump#define()
     return exists('s:autojump_command') ? s:unite_source : []
 endfunction
+"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
