@@ -23,7 +23,7 @@ To change the current working directory with autojump.
 
 A simple mapping that will configure `:j` to change the current working directory with autojump:
 
-    nnoremap :j <ESC>:Unite autojump<CR>
+    nnoremap :j :Unite autojump<CR>
 
 ## License
 
