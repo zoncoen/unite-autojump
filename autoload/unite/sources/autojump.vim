@@ -3,7 +3,7 @@ set cpo&vim
 
 let s:unite_source = {
 \     'name': 'autojump',
-\     'description': '',
+\     'description': 'candidates from autojump database',
 \     'default_action' : 'cd',
 \ }
 
