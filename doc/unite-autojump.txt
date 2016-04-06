@@ -40,7 +40,7 @@ Requirements:
 - autojump (https://github.com/joelthelion/autojump)
 
 Latest version:
-https://github.com/ujihisa/unite-locate
+https://github.com/zoncoen/unite-autojump
 
 ==============================================================================
 USAGE                                                     *unite-autojump-usage*
